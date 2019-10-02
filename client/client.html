@@ -10,8 +10,6 @@
 
     const handleResponse = (xhr, parseResponse) => {
       const content = document.querySelector('#content');
-      
-      // if(method === "GET" || method === "POST") { 
         switch(xhr.status) {
         case 200:
             content.innerHTML = '<b>Success</b>';
@@ -36,12 +34,10 @@
         if(parseResponse){
       const obj = JSON.parse(xhr.response);
 
-      //content.innerHTML = `<b>${obj.id}</b>`;
-      //content.innerHTML += `<p>${xhr.response}</p>`;
-
       console.dir("Object");
       console.dir(obj);
       console.dir(obj.message);
+
       if(obj.message){
                 content.innerHTML += `<p>${obj.message}</p>`;
             }
@@ -49,24 +45,12 @@
                 content.innerHTML += `<p>${xhr.response}</p>`;
             }
       }
-
-      // } else if (method === "HEAD") {
-        // switch(xhr.status) {
-        //   case 201:
-        //     content.innerHTML = '<b>aCreated</b>';
-        //     break;
-        //   case 204:
-        //     content.innerHTML = '<b>Updated</b>';
-        //     break;
-        // }
-      // } else {
-      //   console.dir("Big Broken");
-      // }
     };
 
     const sendPost = (e, nameForm) => {
         const nameField = nameForm.querySelector('#nameField');
-        const ageField = nameForm.querySelector('#ageField');
+        const urlField = nameForm.querySelector('#urlField');
+        const commentField = nameForm.querySelector('#commentField');
         
         const xhr = new XMLHttpRequest();
         xhr.open(nameForm.getAttribute('method'), nameForm.getAttribute('action')); 
@@ -75,7 +59,7 @@
         xhr.setRequestHeader('Accept', 'application/json');
         
         xhr.onload=() => handleResponse(xhr, true);
-        const formData = `name=${nameField.value}&age=${ageField.value}`; 
+        const formData = `name=${nameField.value}&url=${urlField.value}&comment=${commentField.value}`; 
         
         xhr.send(formData);
         e.preventDefault();
@@ -83,13 +67,13 @@
      };
 
 const requestUpdate = (e, entire) => {
-      const urlF = entire.querySelector('#urlField').value;
+      const urlField = entire.querySelector('#urlField').value;
       const method = entire.querySelector('#methodSelect').value;
-      console.log(urlF);
+      console.log(urlField);
       console.log(method);
       
       const xhr = new XMLHttpRequest();
-      xhr.open(method, urlF);
+      xhr.open(method, urlField);
 
       xhr.setRequestHeader('Accept', 'application/json');
       if(method == "get"){
@@ -103,11 +87,9 @@ const requestUpdate = (e, entire) => {
     }
 
     const init = () => {
-      // const topPage = document.querySelector('#top');
-      const userForm = document.querySelector("#userForm");
+      const urlForm = document.querySelector("#urlForm");
       const nameForm = document.querySelector('#nameForm');
 
-      // const getResponses = (e => requestUpdate(e, topPage));
       const addUser = (e) => sendPost(e, nameForm);
       const getName = (e) => requestUpdate(e, userForm);
       
@@ -122,30 +104,21 @@ const requestUpdate = (e, entire) => {
 
 <body>
   <section id="top">
-    <h3>Beging</h3>
+    <h1>Image Sharing Platform</h1>
 
-    <form id="nameForm" action="/addUser" method="post">
-      <label for="name">Name: </label>
-      <input id="nameField" type="text" name="name" />
-      <label for="age">Age: </label>
-      <input id="ageField" type="number" name="age" min="0" max="100" step="1" />
-      <input type="submit" value="Add User" />
-    </form>
-
-    <form id="userForm" action="/getUsers" method="get">
-
-      <select id='urlField'>
-        <option value='/getUsers'>/getUsers</option>
-        <option value='/notReal'>/notReal</option>
-      </select>
-
-      <select id="methodSelect">
-        <option value="get">GET</option>
-        <option value="head">HEAD</option>
-      </select>
-
-      <input type="submit" value="Get User" />
-    </form>
+    <main>
+      <h3>Add an Image and at least one tag:</h3>
+      
+      <div>
+        Title &rightarrow; <input type="text" id="nameField">
+    </div>
+      <div>
+          Image Url &rightarrow; <input type="text" id="urlField">
+      </div>
+      <div>
+          Add some Comments &rightarrow; <input type="text" id="commentField">
+      </div>
+  </main>
 
   </section>
   <section id="content">
