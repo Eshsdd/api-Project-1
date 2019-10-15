@@ -110,7 +110,6 @@
 const requestUpdate = (e, entire) => {
       const urlField = entire.querySelector('#urlField').value;
       const method = entire.querySelector('#methodSelect').value;
-      console.log(method);
       
       const xhr = new XMLHttpRequest();
       xhr.open(method, urlField);
