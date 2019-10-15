@@ -36,30 +36,71 @@
 
       console.dir("Object");
       console.dir(obj);
-      console.dir(obj.message);
 
-      if(obj.message){
-                content.innerHTML += `<p>${obj.message}</p>`;
-            }
-            else{
-                content.innerHTML += `<p>${xhr.response}</p>`;
-            }
-      }
+     content.innerHTML += `<h1>${obj.name}</h1>`;
+     content.innerHTML += `<h2>Situation</h2>`;
+     content.innerHTML += `<p>Area of Operation: ${obj.AOI}<p>`;
     };
 
-    const sendPost = (e, nameForm) => {
-        const nameField = nameForm.querySelector('#nameField');
-        const urlField = nameForm.querySelector('#urlField');
-        const commentField = nameForm.querySelector('#commentField');
+    const sendPost = (e, entire) => {
+        const nameField = entire.querySelector('#nameField');
+      //situation consts
+        const AOI = entire.querySelector('#AOI');
+        const AOO = entire.querySelector('#AOO');
+        const Ter = entire.querySelector('#Ter');
+        const Wet = entire.querySelector('#Wet');
+        const EnF = entire.querySelector('#EnF');
+        const FrF = entire.querySelector('#FrF');
+        const AnD = entire.querySelector('#AnD');
+
+      //mission const
+        const Des = entire.querySelector('#Des');
+        const DaTh = entire.querySelector('#DaTh');
+        const Prep = entire.querySelector('#Prep');
+
+      //Execution
+        const ComIn = entire.querySelector('#ComIn');
+
+        //monday
+        const MPTA = entire.querySelector('#MPTA');
+        const MPTD = entire.querySelector('#MPTD');
+        const MPTL = entire.querySelector('#MPTL');
+        //wednesday
+        const WPTA = entire.querySelector('#WPTA');
+        const WPTD = entire.querySelector('#WPTD');
+        const WPTL = entire.querySelector('#WPTL');
+        //Friday
+        const FPTA = entire.querySelector('#FPTA');
+        const FPTD = entire.querySelector('#FPTD');
+        const FPTL = entire.querySelector('#FPTL');
+        //Lab
+        const LabA = entire.querySelector('#LabA');
+        const LabD = entire.querySelector('#LabD');
+        const LabL = entire.querySelector('#LabL');
+
+        //tasks
+        const TtSu = entire.querySelector('#TtSu');
+        //general Uniform
+        const GUAp = entire.querySelector('#GUAp');
+        const GUAl = entire.querySelector('#GUAl');
+        const GUAe = entire.querySelector('#GUAe');
+
         
         const xhr = new XMLHttpRequest();
-        xhr.open(nameForm.getAttribute('method'), nameForm.getAttribute('action')); 
+        xhr.open(entire.getAttribute('method'), entire.getAttribute('action')); 
         
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.setRequestHeader('Accept', 'application/json');
         
         xhr.onload=() => handleResponse(xhr, true);
-        const formData = `name=${nameField.value}&url=${urlField.value}&comment=${commentField.value}`; 
+        const formData = `name=${nameField.value}&AOI=${AOI.value}&AOO=${AOO.value}&Ter=${Ter.value}&Wet=${Wet.value}&EnF=${EnF.value}&FrF=${FrF.value}&AnD=${AnD.value}
+        &Des=${Des.value}&DaTh=${DaTh.value}&Prep=${Prep.value}&ComIn=${ComIn.value}
+        &MPTA=${MPTA.value}&MPTD=${MPTD.value}&MPTL=${MPTL.value}
+        &WPTA=${WPTA.value}&WPTD=${WPTD.value}&WPTL=${WPTL.value}
+        &FPTA=${FPTA.value}&FPTD=${FPTD.value}&FPTL=${FPTL.value}
+        &LabA=${LabA.value}&LabD=${LabD.value}&LabL=${LabL.value}
+        &TtSu=${TtSu.value}&GUAp=${GUAp.value}&GUAl=${GUAl.value}&GUAe=${GUAe.value}
+       `; 
         
         xhr.send(formData);
         e.preventDefault();
@@ -104,21 +145,59 @@ const requestUpdate = (e, entire) => {
 
 <body>
   <section id="top">
-    <h1>Image Sharing Platform</h1>
 
     <main>
-      <h3>Add an Image and at least one tag:</h3>
-      
+      <h3>OPORD Creator</h3>
+
+
+      <form id="userForm" action="/getUsers" method="get">
       <div>
         Title &rightarrow; <input type="text" id="nameField">
-    </div>
-      <div>
-          Image Url &rightarrow; <input type="text" id="urlField">
       </div>
       <div>
-          Add some Comments &rightarrow; <input type="text" id="commentField">
+        <h2>Situation</h2>
+        <ul style="list-style: none;">
+          <li>Area of Intrest &rightarrow; <input type="text" id="AOI"></li>
+          <li> Area of Operation &rightarrow; <input type="text" id="AOO"></li>
+          <ul style="list-style: none;">
+            <li> Terrain &rightarrow; <input type="text" id="Ter"></li>
+            <li> Weather &rightarrow; <input type="text" id="Wet"></li>
+          </ul>
+          <li> Enemy Forces &rightarrow; <input type="text" id="EnF"></li>
+          <li> Friendly Forces &rightarrow; <input type="text" id="FrF"></li>
+          <li> Attachments / Detachments &rightarrow; <input type="text" id="AnD"></li>
+        </ul>
       </div>
-  </main>
+      <div>
+        <h2>Mission</h2>
+        <ul style="list-style: none;"> 
+            <li> Designation &rightarrow; <input type="text" id="Des"></li>
+            <li> Date Though &rightarrow; <input type="text" id="DaTh"></li>
+            <li> Preperation &rightarrow; <input type="text" id="Prep"></li>
+      </ul>
+      </div>
+      <div>
+        <h2>Execution</h2>
+        <ul style="list-style: none;">
+        Commanders Intent &rightarrow; <input type="text" id="ComIn">
+        <h3>Concept Of Operations</h3>
+        <ul style="list-style: none;">
+            <li> Monday PT (date and Location) &rightarrow; <input type="text" id="MPTD"> <input type="text" id="MPTL">
+        Monday PT (Activities) &rightarrow; <input type="text" id="MPTA"></li>
+        <li>  Wenesday PT (date and Location) &rightarrow; <input type="text" id="WPTD"> <input type="text" id="WPTL">
+        Wenesday PT (Activities) &rightarrow; <input type="text" id="WPTA"></li>
+        <li> Friday PT (date and Location) &rightarrow; <input type="text" id="FPTD"> <input type="text" id="FPTL">
+        Friday PT (Activities) &rightarrow; <input type="text" id="FPTA"></li>
+        <li> Lab (date and Location) &rightarrow; <input type="text" id="LabD"> <input type="text" id="LabL">
+        Lab (Activities) &rightarrow; <input type="text" id="LabA"></li>
+      </ul>
+        </br>
+        <li> Tasks to Subordinate Units &rightarrow; <input type="text" id="TtSU"></li>
+          <li> General Uniform Additions (Pt, Lab, Extra) &rightarrow; <input type="text" id="GUAp"> <input type="text" id="GUAl"> <input type="text" id="GUAe"></li>
+      </div>
+      </form>
+      <input type="submit" value="Final Form" />
+    </main>
 
   </section>
   <section id="content">
